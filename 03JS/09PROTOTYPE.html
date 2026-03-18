@@ -1,36 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <script>
-        //상위 프로토타입 함수
+        // 상위프로토타입 함수 
         function Animal(name) {
             console.log('Animal 생성자 호출!');
-            this.name = name; //속성추가(name)
+            this.name = name;   //속성추가(name)
         }
-        // toString 재정의(Object's toString을 Animal에서 재정의)
+        // toString 재정의(Object's toString을 Animal 에서 재정의)
         Animal.prototype.toString = function () {
-            return 'Animal's toString 재정의 : ${this.name} ;
-         }
-
-        const tori = new Animal("토리");
-        console.log("Animal's Object : ",tori);
-
-         //하위 프로토타입 함수
-        function Dog(name,kind) {
-            //Animal.call(this,name); //상위 프로토타입 생성자 호출!
-            console.log("Dog 생성자 호출!");
-            this.kind = kind; //Dog에 속성추가(name)
+            return `Animal's toString 재정의 : ${this.name}`;
         }
-        //상속 코드(상위클래스 Animal <- 하위클래스 Dog)
-        Dog.prototype=Object.create(Animal.prototype);
+        const tori = new Animal("토리");
+        console.log("Animal's Object : ", tori);
+        console.log(tori.toString());
 
-        const poppi = new Dog("뽀삐","말티즈");
-        console.log("Dog's Object : ",poppi);
+        // 하위프로토타입 함수
+        function Dog(name, kind) {
+            Animal.call(this, name); //상위 프로토타입 생성자 호출! 
+            console.log("Dog 생성자 호출!");
+            this.kind = kind;   //Dog에 속성 추가
+        }
+        //상속 코드(상위클래스Animal <- 하위클래스Dog)
+        Dog.prototype = Object.create(Animal.prototype);
+
+        // toString 재정의(Animal's toString을 Dog 에서 재정의)
+        Dog.prototype.toString = function () {
+            return `Dog's toString 재정의 : ${this.name}, ${this.kind}`;
+        }
+        const poppi = new Dog("뽀삐", "말티즈");
+        console.log("Dog's Object : ", poppi);
+        console.log(poppi.toString());
 
         //
         function 포메라니안(name, kind, color) {
@@ -38,17 +45,16 @@
             console.log("포메라니안 생성자 호출!");
             this.color = color;
         }
-        포메라니안.prototype=Object.create(Dog.prototype);
-        // toString 재정의(포메라니안's toString을 Dog에서 재정의)
+        포메라니안.prototype = Object.create(Dog.prototype);
+        // toString 재정의(포메라니안's toString을 Dog 에서 재정의)
         포메라니안.prototype.toString = function () {
-            
+            return `포메라니안's toString 재정의 : ${this.name}, ${this.kind},${this.color}`;
         }
-        const dog1 = new 포메라니안("누렁이","포메라니안","검정");
+        const dog1 = new 포메라니안("깜장이", "포메라니안", "검정");
         console.log(dog1);
         console.log(dog1.toString());
 
-    
     </script>
-    </body>
+</body>
 
 </html>
